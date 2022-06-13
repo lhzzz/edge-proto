@@ -56,6 +56,7 @@ message GetPodRequest {
 }
 
 message GetPodResponse {
+    Common.Error error = 1;
     k8s.io.api.core.v1.Pod pod = 2;
 }
 
