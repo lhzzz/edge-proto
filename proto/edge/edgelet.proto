@@ -219,13 +219,13 @@ message PodStats {
     ProcessStats process_stats = 9;
 }
 
-message SubscribeNodeStatusRequest{
+message PingRequest{
 }
 
-message SubscribeNodeStatusResponse{
+message PingResponse{
     Common.Error error = 1;
     k8s.io.api.core.v1.NodeStatus node_status = 2;
-    repeated k8s.io.api.core.v1.Pod change_pod = 3;
+    repeated k8s.io.api.core.v1.Pod change_pods = 3;
 }
 
 service Edgelet {
@@ -264,5 +264,5 @@ service Edgelet {
     //GetStatsSummary returns dummy stats for all pods known
     rpc GetStatsSummary(GetStatsSummaryRequest) returns (GetStatsSummaryResponse);
 
-    rpc SubscribeNodeStatus(SubscribeNodeStatusRequest) returns (stream SubscribeNodeStatusResponse);
+    rpc Ping(PingRequest) returns (PingResponse);
 }
