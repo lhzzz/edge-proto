@@ -71,10 +71,20 @@ message GetPodsResponse {
     repeated k8s.io.api.core.v1.Pod pods = 2;
 }
 
+message ContainerLogOptions {
+    int32 tail = 1;
+    int32 limit_bytes = 2;
+    bool timestamps = 3;
+    bool follow = 4;
+    bool previous = 5;
+    string since_time = 6; 
+}
+
 message GetContainerLogsRequest {
     string namespace = 1;
     string name = 2;
     string container_name = 3;
+    ContainerLogOptions opts = 4; 
 }
 
 message GetContainerLogsResponse {
