@@ -265,7 +265,7 @@ service Edgelet {
     rpc GetPods(GetPodsRequest) returns (GetPodsResponse); 
 
     // GetContainerLogs retrieves the logs of a container
-    rpc GetContainerLogs(GetContainerLogsRequest) returns (stream GetContainerLogsResponse);
+    rpc GetContainerLogs(GetContainerLogsRequest) returns (GetContainerLogsResponse);
 
     // RunInContainer executes a command in a container in the pod, copying data
     // between in/out/err and the container's stdin/stdout/stderr.
