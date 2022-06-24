@@ -108,10 +108,12 @@ message EmptyDirVolume {
 
 message ConfigmapVolume {
     map<string, string> items = 1;
+    string namespace = 2;
 }
 
 message SecretVolume {
     map<string, bytes> items = 1;
+    string namespace = 2;
 }
 
 message EdgeVolume {
