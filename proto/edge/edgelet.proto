@@ -5,27 +5,6 @@ import public "pod.proto";
 package pb;
 option go_package=".;pb";
 
-
-message JoinRequest {
-    string node_name = 1;
-    string token = 2;
-    string cloud_address = 3;
-}
-
-message JoinResponse {
-    Common.Error error = 1;
-    string message = 2;
-}
-
-
-message ResetRequest {
-    string node_name = 1;
-}
-
-message ResetResponse {
-    Common.Error error = 1;
-}
-
 message CreatePodRequest {
     k8s.io.api.core.v1.Pod pod = 1;
 }
@@ -239,16 +218,6 @@ message DescribeNodeStatusResponse{
 }
 
 service Edgelet {
-    //FOR edgectl
-
-    //edge join cloud-cluster
-    rpc Join(JoinRequest) returns(JoinResponse);
-
-    //edge leave from cloud-cluster
-    rpc Reset(ResetRequest) returns(ResetResponse);
-
-    //FOR cloud-cluster callback
-
     // CreatePod accepts a Pod definition
     rpc CreatePod(CreatePodRequest) returns(CreatePodResponse);
 
