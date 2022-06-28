@@ -22,6 +22,8 @@ enum ErrorCode{
     UNAUTHORIZE_USERID = 517;//非法的用户id
     UNAUTHORIZED = 518;//未授权
     ROUTER_NOT_EXIST = 519;//路由不存在
+
+    NODE_ALREADY_EXIST = 1001; //节点已存在
 }
 
 message Error{

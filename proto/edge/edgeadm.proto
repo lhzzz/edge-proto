@@ -6,13 +6,12 @@ option go_package=".;pb";
 
 message JoinRequest {
     string node_name = 1;
-    string token = 2;
-    string cloud_address = 3;
+    string cloud_address = 2;
 }
 
 message JoinResponse {
     Common.Error error = 1;
-    string message = 2;
+    bool exist = 2;
 }
 
 
