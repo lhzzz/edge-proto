@@ -1,0 +1,168 @@
+syntax = "proto3";
+import public "common.proto";
+import public "pod.proto";
+
+package pb;
+option go_package=".;pb";
+
+message CreatePodRequest {
+    k8s.io.api.core.v1.Pod pod = 1;
+}
+
+message CreatePodResponse {
+    Common.Error error = 1;
+    k8s.io.api.core.v1.Pod pod = 2;
+}
+
+message UpdatePodRequest {
+    k8s.io.api.core.v1.Pod pod = 1;
+}
+
+message UpdatePodResponse {
+    Common.Error error = 1;
+    k8s.io.api.core.v1.Pod pod = 2;
+}
+
+message DeletePodRequest {
+    k8s.io.api.core.v1.Pod pod = 1;
+}
+
+message DeletePodResponse {
+    Common.Error error = 1;
+}
+
+message GetPodRequest {
+    string namespace = 1;
+    string name = 2; 
+}
+
+message GetPodResponse {
+    Common.Error error = 1;
+    k8s.io.api.core.v1.Pod pod = 2;
+}
+
+message GetPodsRequest {
+    
+}
+
+message GetPodsResponse {
+    Common.Error error = 1;
+    repeated k8s.io.api.core.v1.Pod pods = 2;
+}
+
+message ContainerLogOptions {
+    int32 tail = 1;
+    int32 limit_bytes = 2;
+    bool timestamps = 3;
+    bool follow = 4;
+    bool previous = 5;
+    string since_time = 6; 
+}
+
+message GetContainerLogsRequest {
+    string namespace = 1;
+    string name = 2;
+    string container_name = 3;
+    ContainerLogOptions opts = 4; 
+}
+
+message GetContainerLogsResponse {
+    Common.Error error = 1;
+    bytes log = 2;
+}
+
+message RunInContainerRequest {
+
+}
+
+message RunInContainerResponse {
+
+}
+
+message GetStatsSummaryRequest {
+
+}
+
+message GetStatsSummaryResponse {
+
+}
+
+
+message DescribeNodeStatusRequest{
+}
+
+message DescribeNodeStatusResponse{
+    Common.Error error = 1;
+    k8s.io.api.core.v1.Node node = 2;
+    repeated k8s.io.api.core.v1.Pod change_pods = 3;
+}
+
+message HostPathVolume {
+    string path = 1;
+    string host_type = 2;
+}
+
+message EmptyDirVolume {
+    string storage_medium = 1;
+}
+
+message ConfigmapVolume {
+    map<string, string> items = 1;
+    string namespace = 2;
+}
+
+message SecretVolume {
+    map<string, bytes> items = 1;
+    string namespace = 2;
+}
+
+message EdgeVolume {
+    string name = 1;
+    oneof volumn {
+        HostPathVolume host_path = 2;
+        EmptyDirVolume empty_dir = 3;
+        ConfigmapVolume config_map = 4;
+        SecretVolume secret = 5;
+    } 
+}
+
+message CreateVolumeRequest {
+    repeated EdgeVolume vols = 1;
+}
+
+message CreateVolumeResponse {
+    Common.Error error = 1;
+}
+
+service Edgelet {
+    // CreatePod accepts a Pod definition
+    rpc CreatePod(CreatePodRequest) returns(CreatePodResponse);
+
+    // UpdatePod accepts a Pod definition and updates its reference.
+    rpc UpdatePod(UpdatePodRequest) returns (UpdatePodResponse);
+
+    // DeletePod deletes the specified pod
+    rpc DeletePod(DeletePodRequest) returns (DeletePodResponse);
+
+     // GetPods returns a list of all pods known to be "running".
+    rpc GetPod(GetPodRequest) returns (GetPodResponse); 
+
+    // GetPods returns a list of all pods known to be "running".
+    rpc GetPods(GetPodsRequest) returns (GetPodsResponse); 
+
+    // GetContainerLogs retrieves the logs of a container
+    rpc GetContainerLogs(GetContainerLogsRequest) returns (GetContainerLogsResponse);
+
+    // RunInContainer executes a command in a container in the pod, copying data
+    // between in/out/err and the container's stdin/stdout/stderr.
+    rpc RunInContainer(RunInContainerRequest) returns (RunInContainerResponse);
+
+    //GetStatsSummary returns dummy stats for all pods known
+    rpc GetStatsSummary(GetStatsSummaryRequest) returns (GetStatsSummaryResponse);
+
+    // DescribeNodeStatus for get updated pod and node info
+    rpc DescribeNodeStatus(DescribeNodeStatusRequest) returns (DescribeNodeStatusResponse);
+
+    // CreateVolume will used by create pod 
+    rpc CreateVolume(CreateVolumeRequest)returns(CreateVolumeResponse);
+}
