@@ -23,10 +23,22 @@ message ResetResponse {
     Common.Error error = 1;
 }
 
+message UpgradeRequest {
+    string component = 1;//组件名称
+    repeated string shell_cmds = 2;
+}
+
+message UpgradeResponse {
+    Common.Error error = 1;
+}
+
 service Edgeadm {
     //edge join cloud-cluster
     rpc Join(JoinRequest) returns(JoinResponse);
 
     //edge leave from cloud-cluster
     rpc Reset(ResetRequest) returns(ResetResponse);
+
+    //upgrade 
+    rpc Upgrade(UpgradeRequest) returns (UpgradeResponse);
 }
