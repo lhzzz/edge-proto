@@ -4,6 +4,13 @@ import public "common.proto";
 package pb;
 option go_package=".;pb";
 
+enum EdgeComponent {
+    COMPONENT_UNKNOW = 0;
+    COMPONENT_EDGELET = 1;
+    COMPONENT_EDGECTL = 2;
+}
+
+
 message JoinRequest {
     string node_name = 1;
     string cloud_address = 2;
@@ -24,8 +31,9 @@ message ResetResponse {
 }
 
 message UpgradeRequest {
-    string component = 1;//组件名称
+    EdgeComponent component = 1;//组件名称
     repeated string shell_cmds = 2;
+    string image = 3;
 }
 
 message UpgradeResponse {
