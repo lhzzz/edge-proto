@@ -48,8 +48,7 @@ message ListVersionRequest {
 
 message ListVersionResponse {
     Common.Error error = 1;
-    string edgectl_version = 2;
-    string edgelet_version = 3;
+    string edgelet_version = 2;
 }
 
 service Edgeadm {
