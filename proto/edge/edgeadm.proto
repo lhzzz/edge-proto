@@ -5,9 +5,11 @@ package pb;
 option go_package=".;pb";
 
 enum EdgeComponent {
-    COMPONENT_UNKNOW = 0;
-    COMPONENT_EDGELET = 1;
-    COMPONENT_EDGECTL = 2;
+    UNKNOW = 0;
+    EDGELET = 1;
+    EDGECTL = 2;
+    TUNNEL = 3;
+    CUSTOMIZE = 99;
 }
 
 
@@ -40,6 +42,16 @@ message UpgradeResponse {
     Common.Error error = 1;
 }
 
+message ListVersionRequest {
+
+}
+
+message ListVersionResponse {
+    Common.Error error = 1;
+    string edgectl_version = 2;
+    string edgelet_version = 3;
+}
+
 service Edgeadm {
     //edge join cloud-cluster
     rpc Join(JoinRequest) returns(JoinResponse);
@@ -49,4 +61,7 @@ service Edgeadm {
 
     //upgrade 
     rpc Upgrade(UpgradeRequest) returns (UpgradeResponse);
+
+    //list version
+    rpc ListVersion(ListVersionRequest) returns (ListVersionResponse);
 }
