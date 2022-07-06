@@ -22,9 +22,18 @@ message DeleteNodeResponse {
     Common.Error error = 1;
 }
 
+message GetNodeRequest {
+    string node_name = 1;
+}
+
+message GetNodeResponse {
+    Common.Error error = 1;
+}
 
 service EdgeRegistryService{
     rpc CreateNode(CreateNodeRequest) returns (CreateNodeResponse);
 
     rpc DeleteNode(DeleteNodeRequest) returns (DeleteNodeResponse);
+
+    rpc GetNode(GetNodeRequest) returns (GetNodeResponse);
 }
