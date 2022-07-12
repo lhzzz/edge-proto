@@ -4,6 +4,15 @@ import public "common.proto";
 package pb;
 option go_package=".;pb";
 
+enum EdgeComponent {
+    UNKNOW = 0;
+    EDGELET = 1;
+    EDGECTL = 2;
+    TUNNEL = 3;
+    CUSTOMIZE = 99;
+}
+
+
 message JoinRequest {
     string node_name = 1;
     string cloud_address = 2;
@@ -16,11 +25,29 @@ message JoinResponse {
 
 
 message ResetRequest {
-    string node_name = 1;
 }
 
 message ResetResponse {
     Common.Error error = 1;
+}
+
+message UpgradeRequest {
+    EdgeComponent component = 1;//组件名称
+    repeated string shell_cmds = 2;
+    string image = 3;
+}
+
+message UpgradeResponse {
+    Common.Error error = 1;
+}
+
+message ListVersionRequest {
+
+}
+
+message ListVersionResponse {
+    Common.Error error = 1;
+    string edgelet_version = 2;
 }
 
 service Edgeadm {
@@ -29,4 +56,10 @@ service Edgeadm {
 
     //edge leave from cloud-cluster
     rpc Reset(ResetRequest) returns(ResetResponse);
+
+    //upgrade 
+    rpc Upgrade(UpgradeRequest) returns (UpgradeResponse);
+
+    //list version
+    rpc ListVersion(ListVersionRequest) returns (ListVersionResponse);
 }
